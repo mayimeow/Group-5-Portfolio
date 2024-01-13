@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infix to Postfix Converter</title>
+    <style>
+        body {
+            background-image: url("../static/images/lalala.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px; 
+            border-radius: 10px;
+            text-align: center;
+            width: 60%; 
+            max-width: 600px; 
+            opacity: 85%;
+        }
+        h1 {
+            font-family: Arial, sans-serif;
+            color: #4caf50; 
+            font-size: 60px;
+        }
+        label {
+            color: #66bb6a; 
+            font-size: 20px;
+        }
+        input[type="text"] {
+            border: 2px solid #66bb6a; 
+            border-radius: 10px;
+            padding: 10px;
+            width: 80%;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #388e3c; 
+        }
+        p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        h2 {
+            color: #4caf50;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Infix to Postfix Converter</h1>
+
+        <form method="post">
+            <label for="infix_expression">Enter Infix Expression:</label>
+            <input type="text" id="infix_expression" name="infix_expression" required>
+            <br>
+            <button type="submit">Convert</button>
+        </form>
+    
+        {% if infix_expression %}
+            <h2>Output Postfix:</h2>
+            {% for step in postfix_steps %}
+                <p>{{ step }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

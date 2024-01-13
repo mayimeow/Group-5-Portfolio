@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeQueue page</title>
+</head>
+<body>
+    <style>
+        body {
+            background-image: url("../static/images/mew.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 60%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            
+        }
+        h1 {
+            font-family: Arial, sans-serif;
+            color: #00008B;
+            font-size: 36px;
+            margin: 0;
+        }
+        #display-section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 60%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #00008B;
+            font-size: 24px;
+            margin-bottom: 10px;
+        
+        }
+        #queue-display {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        #queue-display li {
+            margin-bottom: 5px;
+            color: #33004D;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #queue-form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 60%;
+            max-width: 600px;
+        }
+        label {
+            color: #00008B;
+            font-size: 20px;
+        }
+        input[type="text"] {
+            border: 2px solid #00008B;
+            border-radius: 10px;
+            padding: 10px;
+            width: 80%;
+            margin: 10px 0;
+            background-color: white;
+            color: #33004D;
+            font-weight: bold;
+        }
+        button {
+            background-color: #00008B;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-left: 5px;
+        }
+        button:hover {
+            background-color: #388e3c;
+        }
+    </style>
+    
+    <header class="container">
+        <h1>DeQueue page</h1>
+    </header>
+
+    <div id="display-section">
+        <!-- Display section for output -->
+        <h2>Dequeue:</h2>
+        <ul id="queue-display"></ul>
+    </div>
+
+    <form id="queue-form">
+        <label for="data">Enter Data:</label>
+        <input type="text" id="data" required>
+        <button type="button" onclick="enqueueFront()">Add to Front</button>
+        <button type="button" onclick="enqueueRear()">Add to Rear</button>
+        <button onclick="dequeueFront()">Remove Front</button>
+        <button onclick="dequeueRear()">Remove Rear</button>
+    </form>
+
+    <script>
+        class Node {
+            constructor(data) {
+                this.data = data;
+                this.next = null;
+            }
+        }
+
+        class Queue {
+            constructor() {
+                this.front = null;
+                this.rear = null;
+            }
+
+            enqueueFront(data) {
+                const newNode = new Node(data);
+                if (!this.front) {
+                    this.front = newNode;
+                    this.rear = newNode;
+                } else {
+                    newNode.next = this.front;
+                    this.front = newNode;
+                }
+                this.updateDisplay();
+            }
+
+            enqueueRear(data) {
+                const newNode = new Node(data);
+                if (!this.front) {
+                    this.front = newNode;
+                    this.rear = newNode;
+                } else {
+                    this.rear.next = newNode;
+                    this.rear = newNode;
+                }
+                this.updateDisplay();
+            }
+
+            dequeueFront() {
+                if (this.front) {
+                    this.front = this.front.next;
+                    this.updateDisplay();
+                }
+            }
+
+            dequeueRear() {
+                if (this.front) {
+                    let current = this.front;
+                    let previous = null;
+                    while (current.next) {
+                        previous = current;
+                        current = current.next;
+                    }
+                    if (previous) {
+                        previous.next = null;
+                        this.rear = previous;
+                    } else {
+                        this.front = null;
+                        this.rear = null;
+                    }
+                    this.updateDisplay();
+                }
+            }
+
+            toArray() {
+                const result = [];
+                let current = this.front;
+                while (current) {
+                    result.push(current.data);
+                    current = current.next;
+                }
+                return result;
+            }
+
+            updateDisplay() {
+                const displaySection = document.getElementById('queue-display');
+                const queueArray = this.toArray();
+                displaySection.innerHTML = '<ul>' + queueArray.map(item => `<li>${item}</li>`).join('') + '</ul>';
+            }
+        }
+
+        const queue = new Queue();
+
+        function enqueueFront() {
+            const dataInput = document.getElementById('data');
+            const data = dataInput.value.trim();
+            if (data !== '') {
+                queue.enqueueFront(data);
+                dataInput.value = '';
+            }
+        }
+
+        function enqueueRear() {
+            const dataInput = document.getElementById('data');
+            const data = dataInput.value.trim();
+            if (data !== '') {
+                queue.enqueueRear(data);
+                dataInput.value = '';
+            }
+        }
+
+        function dequeueFront() {
+            queue.dequeueFront();
+        }
+
+        function dequeueRear() {
+            queue.dequeueRear();
+        }
+    </script>
+</body>
+</html>
