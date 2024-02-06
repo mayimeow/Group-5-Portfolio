@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Graph.css') }}">
+
+  <title>MRT Shortest Path Finder</title>
+</head>
+<body>
+  <div class="container">
+    <h2>Result:</h2>
+    <div id="result-container">
+      <div id="result"></div>   
+    </div>  <img src="{{ url_for('static', filename='images/Graph.jpg') }}" alt="Graph">
+
+  <div class="container">
+    <div>
+      <label for="source">Source Station:</label>
+      <select id="source">
+        <option value="Roosevelt">Roosevelt</option>
+        <option value="Balintawak">Balintawak</option>
+        <option value="Malvar">Malvar</option>
+        <option value="Monumento">Monumento</option>
+        <option value="5th Avenue">5th Avenue</option>
+        <option value="R.Papa">R.Papa</option>
+        <option value="Abad Santos">Abad Santos</option>
+        <option value="Blumentritt">Blumentritt</option>
+        <option value="Tayuman">Tayuman</option>
+        <option value="Bambang">Bambang</option>
+        <option value="D-Jose/Recto">D-Jose/Recto</option>
+        <option value="Carriedo">Carriedo</option>
+        <option value="Central Terminal">Central Terminal</option>
+        <option value="United Nations">United Nations</option>
+        <option value="Pedro Gil">Pedro Gil</option>
+        <option value="Quirino Avenue">Quirino Avenue</option>
+        <option value="Vito Cruz">Vito Cruz</option>
+        <option value="Gil Puyat">Gil Puyat</option>
+        <option value="Libertad">Libertad</option>
+        <option value="EDSA/Taft">EDSA/Taft</option>
+        <option value="Baclaran">Baclaran</option>
+        <option value="Santolan">Santolan</option>
+        <option value="Katipunan">Katipunan</option>
+        <option value="Anonas">Anonas</option>
+        <option value="Betty Go-Belmonte">Betty Go-Belmonte</option>
+        <option value="Gilmore">Gilmore</option>
+        <option value="J.Ruiz">J.Ruiz</option>
+        <option value="V.Mapa">V.Mapa</option>
+        <option value="Pureza">Pureza</option>
+        <option value="Legarda">Legarda</option>
+        <option value="Quezon Avenue">Quezon Avenue</option>
+        <option value="GMA Kamuning">GMA Kamuning</option>
+        <option value="Araneta Center-Cubao">Araneta Center-Cubao</option>
+        <option value="Santolan-Anapolis">Santolan-Anapolis</option>
+        <option value="Ortigas">Ortigas</option>
+        <option value="Shaw Boulevard">Shaw Boulevard</option>
+        <option value="Boni">Boni</option>
+        <option value="Guadalupe">Guadalupe</option>
+        <option value="Buendia">Buendia</option>
+        <option value="Ayala">Ayala</option>
+        <option value="Magallanes">Magallanes</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="destination">Destination Station:</label>
+      <select id="destination">
+        <option value="Roosevelt">Roosevelt</option>
+        <option value="Balintawak">Balintawak</option>
+        <option value="Malvar">Malvar</option>
+        <option value="Monumento">Monumento</option>
+        <option value="5th Avenue">5th Avenue</option>
+        <option value="R.Papa">R.Papa</option>
+        <option value="Abad Santos">Abad Santos</option>
+        <option value="Blumentritt">Blumentritt</option>
+        <option value="Tayuman">Tayuman</option>
+        <option value="Bambang">Bambang</option>
+        <option value="D-Jose/Recto">D-Jose/Recto</option>
+        <option value="Carriedo">Carriedo</option>
+        <option value="Central Terminal">Central Terminal</option>
+        <option value="United Nations">United Nations</option>
+        <option value="Pedro Gil">Pedro Gil</option>
+        <option value="Quirino Avenue">Quirino Avenue</option>
+        <option value="Vito Cruz">Vito Cruz</option>
+        <option value="Gil Puyat">Gil Puyat</option>
+        <option value="Libertad">Libertad</option>
+        <option value="EDSA/Taft">EDSA/Taft</option>
+        <option value="Baclaran">Baclaran</option>
+        <option value="Santolan">Santolan</option>
+        <option value="Katipunan">Katipunan</option>
+        <option value="Anonas">Anonas</option>
+        <option value="Betty Go-Belmonte">Betty Go-Belmonte</option>
+        <option value="Gilmore">Gilmore</option>
+        <option value="J.Ruiz">J.Ruiz</option>
+        <option value="V.Mapa">V.Mapa</option>
+        <option value="Pureza">Pureza</option>
+        <option value="Legarda">Legarda</option>
+        <option value="Quezon Avenue">Quezon Avenue</option>
+        <option value="GMA Kamuning">GMA Kamuning</option>
+        <option value="Araneta Center-Cubao">Araneta Center-Cubao</option>
+        <option value="Santolan-Anapolis">Santolan-Anapolis</option>
+        <option value="Ortigas">Ortigas</option>
+        <option value="Shaw Boulevard">Shaw Boulevard</option>
+        <option value="Boni">Boni</option>
+        <option value="Guadalupe">Guadalupe</option>
+        <option value="Buendia">Buendia</option>
+        <option value="Ayala">Ayala</option>
+        <option value="Magallanes">Magallanes</option>
+
+      </select>
+    </div>
+
+    <button onclick="findShortestPath()">Find Shortest Path</button>
+  </div>
+  <script>
+    function findShortestPath() {
+      const source = document.getElementById('source').value;
+      const destination = document.getElementById('destination').value;
+
+      fetch('/find_shortest_path', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `source=${source}&destination=${destination}`
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('result').innerText = data.result;
+      });
+    }
+  </script>
+</body>
+</html>

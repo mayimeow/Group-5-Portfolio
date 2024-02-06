@@ -1,17 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: #f5f5f5;
+    margin: 0;
+    font-family: Helvetica, Sans-serif;
+    overflow-x: hidden;
     font-family: Arial, sans-serif;
-    margin: 20px; 
     background-image: url('../images/ololol.png');
-    background-size: cover; 
-    background-position: center center; 
+    background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
+    padding-top: 60px; /* Add padding to the top to accommodate the header */
 }
 
 .intro {
     text-align: center;
-    margin-bottom: 20px; 
-} 
+    margin-bottom: 20px;
+}
 
 .intro h1 {
     font-size: 2em;
@@ -25,8 +34,9 @@ body {
     justify-content: center;
     margin: 20px;
 }
+
 .profile {
-    background-color: rgba(255, 255, 255, 0.8); /* Use rgba for transparency */
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 10px;
@@ -43,8 +53,8 @@ body {
 
 .profile img {
     width: 100%;
-    height: 250px; 
-    object-fit: cover; 
+    height: 250px;
+    object-fit: cover;
     border-bottom: 2px solid #ddd;
 }
 
@@ -62,3 +72,4 @@ body {
     color: #555;
     margin-bottom: 10px;
 }
+

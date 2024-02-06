@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualization</title>
+    <style>
+        body {
+            background-image: url("../static/images/Sortbg.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-family: Arial, sans-serif;
+            color: #00008B;
+            font-size: 36px;
+            margin: 20px 0;
+        }
+        #form-section {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 60%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        label {
+            color: #00008B;
+            font-size: 20px;
+        }
+        select {
+            border: 2px solid #00008B;
+            border-radius: 10px;
+            padding: 10px;
+            width: 80%;
+            margin: 10px 0;
+            background-color: white;
+            color: #33004D;
+            font-weight: bold;
+        }
+        button {
+            background-color: #00008B;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-left: 5px;
+        }
+        button:hover {
+            background-color: #388e3c;
+        }
+        #display-section {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 60%;
+            max-width: 600px;
+        }
+        h2 {
+            color: #00008B;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #33004D;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .scrollable-container {
+            max-height: 50px; /* Set the maximum height of the container */
+            overflow: auto; /* Enable scrolling when content exceeds the container height */
+        }
+
+        #array-display, #sorted-array-display {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        #array-display li, #sorted-array-display li {
+            margin-bottom: 5px;
+            color: #33004D;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sorting Algorithm Visualization</h1>
+
+    <div id="form-section">
+        <!-- Form section for input -->
+        <form method="POST" action="{{ url_for('sort_page') }}">
+            <label for="size">Choose the size of the dataset:</label>
+            <select name="size" id="size">
+                <option value="10">10</option>
+                <option value="100">100</option>
+                <option value="1000">1000</option>
+                <option value="10000">10000</option>
+            </select>
+
+            <br>
+
+            <label for="algorithm">Select a sorting algorithm:</label>
+            <select name="algorithm" id="algorithm">
+                <option value="bubble_sort">Bubble Sort</option>
+                <option value="selection_sort">Selection Sort</option>
+                <option value="insertion_sort">Insertion Sort</option>
+                <option value="merge_sort">Merge Sort</option>
+                <option value="quick_sort">Quick Sort</option>
+            </select>
+
+            <br>
+
+            <button type="submit">Sort</button>
+        </form>
+    </div>
+
+    <div id="display-section">
+        <!-- Display section for output -->
+        <h2>Array:</h2>
+        <div class="scrollable-container">
+            <ul id="array-display">
+                {% for element in array %}
+                    <li>{{ element }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+        {% if sorted_array %}
+        <h2>Sorted Array:</h2>
+        <div class="scrollable-container">
+            <ul id="sorted-array-display">
+                {% for element in sorted_array %}
+                    <li>{{ element }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <p>Time Taken: {{ time_taken }} seconds</p>
+    {% endif %}
+    
+        {% if error %}
+            <p id="error">{{ error }}</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
